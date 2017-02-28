@@ -2,6 +2,12 @@
 
 Sistema de facturación/control de inventario.
 
+## Clave y Usuario para el Login
+
+*Usuario: antony
+
+*Password: jeffersson
+
 ## Herramientas utilizadas
 
 Para la realización del template:
@@ -24,4 +30,10 @@ A falta de:
 
 *Corregir bug registro cliente con fecha de nacimiento.
 
+*Facturacion
 
+*Auntoincremento de Codigo de los productos
+
+*Advertencias de Confirmacion para borrar y modificar 
+
+*Generacion de informes mensuales en PDF
