@@ -36,4 +36,6 @@ A falta de:
 
 *Advertencias de Confirmacion para borrar y modificar 
 
-*Generacion de informes mensuales en PDF
+*Generacion de informes diarios, semanales, mensuales en PDF
+
+
