@@ -109,7 +109,18 @@
                 $resultado=mysqli_query($conexion,$sql);
                 
                 //EDMUNDO
-            
+                $consultaNombre="select Nombres from registro_cliente;";
+                $consultaCedula="select Cedula from registro_cliente;";
+                $consultaApellido="select Apellidos from registro_cliente;";
+                $consultaDireccion="select Direccion from registro_cliente;";
+                $consultaFecNac="select Fecha_de_Nacimiento from registro_cliente;";
+
+                $resultId = mysqli_query($conexion,$consultaCedula);
+                $resultFName = mysqli_query($conexion,$consultaNombre);
+                $resultLName = mysqli_query($conexion,$consultaApellido);
+                $resultAddress = mysqli_query($conexion,$consultaDireccion);
+                $resultBirthDate = mysqli_query($conexion,$consultaFecNac);
+
                 if (isset($_POST['submit'])) {
                     $filterCedula = $_POST["cedula"];
                     $filterName = $_POST["nombre"];
@@ -117,10 +128,19 @@
                     $filterDireccion = $_POST["direccion"];
                     $filterFechaNacimiento = $_POST["fechaNacimiento"];   
                     
-                    function filterParams($filterCedula,$filterName,$filterApellido,$filterDireccion,$filterFechaNacimiento){
-                    echo '<p>$filterCedula</p>';
-                    }
-         
+                    echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
+                    echo "<table class='table' id='tableList' align='center' border='1'>";
+                    echo "<tr>";
+                    echo "<th>Cédula<th/>";
+                    echo "<th>Nombre<th/>";
+                    echo "<th>Apellido<th/>";
+                    echo "<th>Dirección<th/>";
+                    echo "<th>Fecha de Nacimiento<th/>";
+
+                    echo "</tr>";
+
+                    
+                    
 
                 }
                 //FIN_EDMUNDO
@@ -134,8 +154,9 @@
                 echo "<th>Apellido<th/>";
                 echo "<th>Dirección<th/>";
                 echo "<th>Fecha de Nacimiento<th/>";
-
                 echo "</tr>";
+
+                while($registro_cliente=mysqli_fetch_array($resultado))
                     
                 //convertir resultado en un array o vector
                 //vector o arreglo numerico, con indice numerico
