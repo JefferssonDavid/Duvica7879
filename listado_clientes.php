@@ -30,6 +30,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
      <link rel="stylesheet" type="text/css" href="css/estilos_tabla.css">
+     
 </head>
 
 <body>
@@ -68,7 +69,7 @@
 
         <div class="php">
             <!--EDMUNDO-->
-            <form action="#" class="form-inline">
+            <form action="#" method="POST" class="form-inline">
                 <div class="input-group">
                     <input type="text" name="cedula" class="form-control" size="10" placeholder="Cédula">
 
@@ -88,12 +89,12 @@
                 <div class="input-group">
                     <input type="date" name="fechaNacimiento" class="form-control" size="15">                   
                 </div>
-                <button class="btn btn-default" type="submit">
+                <button class="btn btn-default" type="submit" >
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
             </form>
             <!--FIN_EDMUNDO-->
-            
+
             <?php
                 // conexion al servidor
                 $conexion = mysqli_connect("127.0.0.1","root","");
@@ -108,20 +109,25 @@
                 $resultado=mysqli_query($conexion,$sql);
                 
                 //EDMUNDO
-                $filterCedula = _GET["cedula"];
-                $filterName = _GET["nombre"];
-                $filterApellido = _GET["apellido"];
-                $filterDireccion = _GET["direccion"];
-                $filterFechaNacimiento = _GET["fechaNacimiento"];
-
-                function filterParams(){
+            
+                if (isset($_POST['submit'])) {
+                    $filterCedula = $_POST["cedula"];
+                    $filterName = $_POST["nombre"];
+                    $filterApellido = $_POST["apellido"];
+                    $filterDireccion = $_POST["direccion"];
+                    $filterFechaNacimiento = $_POST["fechaNacimiento"];   
+                    
+                    function filterParams($filterCedula,$filterName,$filterApellido,$filterDireccion,$filterFechaNacimiento){
+                    echo '<p>$filterCedula</p>';
+                    }
+         
 
                 }
                 //FIN_EDMUNDO
 
                 //IMPRIMIR EL ENCABEZADO DEL REPORTE Y DE LA TABLA
                 echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
-                echo "<table class='table' align='center' border='1'>";
+                echo "<table class='table' id='tableList' align='center' border='1'>";
                 echo "<tr>";
                 echo "<th>Cédula<th/>";
                 echo "<th>Nombre<th/>";
