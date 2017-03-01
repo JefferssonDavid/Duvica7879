@@ -67,55 +67,93 @@
                 </div>
 
         <div class="php">
+            <!--EDMUNDO-->
+            <form action="#" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="cedula" class="form-control" size="10" placeholder="Cédula">
 
+                </div>
+                <div class="input-group">
+                    <input type="text" name="nombre" class="form-control" size="15" placeholder="Nombre">
+                    
+                </div>
+                <div class="input-group">
+                    <input type="text" name="apellido" class="form-control" size="15" placeholder="Apellido">
+                    
+                </div>
+                <div class="input-group">
+                    <input type="text" name="direccion" class="form-control" size="15" placeholder="Dirección">
+                    
+                </div>
+                <div class="input-group">
+                    <input type="date" name="fechaNacimiento" class="form-control" size="15">                   
+                </div>
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </form>
+            <!--FIN_EDMUNDO-->
+            
+            <?php
+                // conexion al servidor
+                $conexion = mysqli_connect("127.0.0.1","root","");
 
-                    <?php
-// conexion al servidor
-$conexion = mysqli_connect("127.0.0.1","root","");
+                //seleccionar la base de datos
+                $db = mysqli_select_db($conexion,"duvica7879");
 
-//seleccionar la base de datos
-$db = mysqli_select_db($conexion,"duvica7879");
+                //sentencia SQL
+                $sql="select * from registro_cliente;";
 
-//sentencia SQL
-$sql="select * from registro_cliente;";
+                // es un puntero
+                $resultado=mysqli_query($conexion,$sql);
+                
+                //EDMUNDO
+                $filterCedula = _GET["cedula"];
+                $filterName = _GET["nombre"];
+                $filterApellido = _GET["apellido"];
+                $filterDireccion = _GET["direccion"];
+                $filterFechaNacimiento = _GET["fechaNacimiento"];
 
-// es un puntero
-$resultado=mysqli_query($conexion,$sql);
-//IMPRIMIR EL ENCABEZADO DEL REPORTE Y DE LA TABLA
-echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
-echo "<table class='table' align='center' border='1'>";
-echo "<tr>";
-echo "<th>Cedula<th/>";
-echo "<th>Nombre<th/>";
-echo "<th>Apellido<th/>";
-echo "<th>Direccion<th/>";
-echo "<th>Fecha de Nacimiento<th/>";
+                function filterParams(){
 
-echo "</tr>";
-    
-//convertir resultado en un array o vector
-//vector o arreglo numerico, con indice numerico
-//$cliente=mysql_fetch_row($resultado
+                }
+                //FIN_EDMUNDO
 
-//CICLO PARA MOSTRAR LOS DATOS EN TABLA 
+                //IMPRIMIR EL ENCABEZADO DEL REPORTE Y DE LA TABLA
+                echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
+                echo "<table class='table' align='center' border='1'>";
+                echo "<tr>";
+                echo "<th>Cédula<th/>";
+                echo "<th>Nombre<th/>";
+                echo "<th>Apellido<th/>";
+                echo "<th>Dirección<th/>";
+                echo "<th>Fecha de Nacimiento<th/>";
 
-while($registro_cliente=mysqli_fetch_array($resultado))
-{
-    echo "<tr>";
-    //pase de parametros url get
-    echo "<td>$registro_cliente[0]<td/>";
-    echo "<td>$registro_cliente[1]<td/>";
-    echo "<td>$registro_cliente[2]<td/>";
-    echo "<td>$registro_cliente[3]<td/>";
-    echo "<td>$registro_cliente[4]<td/>";
-   
-    echo "</tr>";
-}
-echo '</table>';
+                echo "</tr>";
+                    
+                //convertir resultado en un array o vector
+                //vector o arreglo numerico, con indice numerico
+                //$cliente=mysql_fetch_row($resultado
 
-//cerrar la conexion
-mysqli_close($conexion);
-?>
+                //CICLO PARA MOSTRAR LOS DATOS EN TABLA 
+
+                while($registro_cliente=mysqli_fetch_array($resultado))
+                {
+                    echo "<tr>";
+                    //pase de parametros url get
+                    echo "<td>$registro_cliente[0]<td/>";
+                    echo "<td>$registro_cliente[1]<td/>";
+                    echo "<td>$registro_cliente[2]<td/>";
+                    echo "<td>$registro_cliente[3]<td/>";
+                    echo "<td>$registro_cliente[4]<td/>";
+                   
+                    echo "</tr>";
+                }
+                echo '</table>';
+
+                //cerrar la conexion
+                mysqli_close($conexion);
+            ?>
 
                    
                       
