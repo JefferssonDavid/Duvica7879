@@ -28,8 +28,6 @@ A falta de:
 
 *Advertencias para el control de inventario.
 
-*Corregir bug registro cliente con fecha de nacimiento.
-
 *Facturacion
 
 *Auntoincremento de Codigo de los productos
