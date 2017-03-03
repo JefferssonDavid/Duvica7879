@@ -5,5 +5,5 @@
     $filterDireccion = $_POST["direccion"];
     $filterFechaNacimiento = $_POST["fechaNacimiento"]; 
 
-    echo "<p>$filterCedula</p>";
+    
  ?>

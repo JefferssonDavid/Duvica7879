@@ -22,7 +22,7 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
      <link rel="stylesheet" type="text/css" href="css/estilos_tabla.css">
-     
+    
 </head>
 
 <body>
@@ -69,32 +69,33 @@
 
         <div class="php">
             <!--EDMUNDO-->
-            <form action="#" method="POST" class="form-inline">
+            <form action="" method="POST" class="form-inline">
                 <div class="input-group">
-                    <input type="text" name="cedula" class="form-control" size="10" placeholder="Cédula">
+                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' autocomplete="off" maxlength="9" name="cedula" class="form-control" size="10" placeholder="Cédula">
 
                 </div>
                 <div class="input-group">
-                    <input type="text" name="nombre" class="form-control" size="15" placeholder="Nombre">
+                    <input type="text" autocomplete="off" name="nombre" class="form-control" size="15" placeholder="Nombre">
                     
                 </div>
                 <div class="input-group">
-                    <input type="text" name="apellido" class="form-control" size="15" placeholder="Apellido">
+                    <input type="text" autocomplete="off" name="apellido" class="form-control" size="15" placeholder="Apellido">
                     
                 </div>
                 <div class="input-group">
-                    <input type="text" name="direccion" class="form-control" size="15" placeholder="Dirección">
+                    <input type="text" autocomplete="off" name="direccion" class="form-control" size="15" placeholder="Dirección">
                     
                 </div>
                 <div class="input-group">
-                    <input type="date" name="fechaNacimiento" class="form-control" size="15">                   
+                    <input type="date" autocomplete="off" name="fechaNacimiento" class="form-control" size="15">                   
                 </div>
-                <button class="btn btn-default" type="submit" >
+                <button class="btn btn-default" type="submit" name="search" >
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
             </form>
+              
             <!--FIN_EDMUNDO-->
-
+            
             <?php
                 // conexion al servidor
                 $conexion = mysqli_connect("127.0.0.1","root","");
@@ -121,33 +122,13 @@
                 $resultAddress = mysqli_query($conexion,$consultaDireccion);
                 $resultBirthDate = mysqli_query($conexion,$consultaFecNac);
 
-                if (isset($_POST['submit'])) {
-                    $filterCedula = $_POST["cedula"];
-                    $filterName = $_POST["nombre"];
-                    $filterApellido = $_POST["apellido"];
-                    $filterDireccion = $_POST["direccion"];
-                    $filterFechaNacimiento = $_POST["fechaNacimiento"];   
-                    
-                    echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
-                    echo "<table class='table' id='tableList' align='center' border='1'>";
-                    echo "<tr>";
-                    echo "<th>Cédula<th/>";
-                    echo "<th>Nombre<th/>";
-                    echo "<th>Apellido<th/>";
-                    echo "<th>Dirección<th/>";
-                    echo "<th>Fecha de Nacimiento<th/>";
-
-                    echo "</tr>";
-
-                    
-                    
-
-                }
+                
                 //FIN_EDMUNDO
 
                 //IMPRIMIR EL ENCABEZADO DEL REPORTE Y DE LA TABLA
                 echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
-                echo "<table class='table' id='tableList' align='center' border='1'>";
+                echo "<table class='table display' id='tableList' align='center' border='1'>";
+                echo "<thead>";
                 echo "<tr>";
                 echo "<th>Cédula<th/>";
                 echo "<th>Nombre<th/>";
@@ -155,8 +136,19 @@
                 echo "<th>Dirección<th/>";
                 echo "<th>Fecha de Nacimiento<th/>";
                 echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
 
-                while($registro_cliente=mysqli_fetch_array($resultado))
+                if (isset($_POST['search'])) {
+                    $filterCedula = $_POST["cedula"];
+                    $filterName = $_POST["nombre"];
+                    $filterApellido = $_POST["apellido"];
+                    $filterDireccion = $_POST["direccion"];
+                    $filterFechaNacimiento = $_POST["fechaNacimiento"]; 
+                    
+                     
+
+                }
                     
                 //convertir resultado en un array o vector
                 //vector o arreglo numerico, con indice numerico
@@ -176,12 +168,13 @@
                    
                     echo "</tr>";
                 }
+                echo "</tbody>";
                 echo '</table>';
 
                 //cerrar la conexion
                 mysqli_close($conexion);
             ?>
-
+            
                    
                       
                 <!-- /.row -->
@@ -206,6 +199,15 @@
     <script src="js/plugins/morris/morris.min.js"></script>
     <script src="js/plugins/morris/morris-data.js"></script>
 
+    <!-- DataTable JavaScript -->
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#tableList').DataTable();
+    
+    });
+  </script>
+    
 </body>
 
 </html>
