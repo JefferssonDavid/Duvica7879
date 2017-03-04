@@ -1,38 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php include("vistas/header.php") ?>
 
-<head>
+<?php
+    //Sentencia IF para filtrar los datos de la tabla
+    if (isset($_POST['search'])) {
+        $searchValue= $_POST['searchInput'];
+        $sql= "SELECT * FROM `registro_cliente` WHERE CONCAT(`Cedula`, `Nombres`, `Apellidos`, `Direccion`, `Fecha_de_Nacimiento`) LIKE '%".$searchValue."%'";
+        $searchResult = filterTable($sql);
+        //Captura el valor del input de busqueda y lo pasa como parametro para la sentencia SQL
+    }
+    else
+    {
+        $sql="select * from registro_cliente;";
+        $searchResult = filterTable($sql);
+        //Como el input de busqueda esta vacio, selecciona todos los registros de la BD
+    }
+     //Función que maneja la base de datos y envia la consulta SQL
+    function filterTable($sql){
+        // conexion al servidor
+        $conexion = mysqli_connect("127.0.0.1","root","","duvica7879");
+        $filterResult = mysqli_query($conexion,$sql);
+        return $filterResult;
+    }   
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Duvica 7879</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-     <link rel="stylesheet" type="text/css" href="css/estilos_tabla.css">
-    
-</head>
-
+?>
 <body>
 
     <div id="wrapper">
@@ -65,120 +56,46 @@
                         <h1 class="page-header">
                             DUVICA 7879 <small></small>
                         </h1>
-                </div>
+                    </div>
 
         <div class="php">
-            <!--EDMUNDO-->
-            <form action="" method="POST" class="form-inline">
-                <div class="input-group">
-                    <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' autocomplete="off" maxlength="9" name="cedula" class="form-control" size="10" placeholder="Cédula">
-
-                </div>
-                <div class="input-group">
-                    <input type="text" autocomplete="off" name="nombre" class="form-control" size="15" placeholder="Nombre">
-                    
-                </div>
-                <div class="input-group">
-                    <input type="text" autocomplete="off" name="apellido" class="form-control" size="15" placeholder="Apellido">
-                    
-                </div>
-                <div class="input-group">
-                    <input type="text" autocomplete="off" name="direccion" class="form-control" size="15" placeholder="Dirección">
-                    
-                </div>
-                <div class="input-group">
-                    <input type="date" autocomplete="off" name="fechaNacimiento" class="form-control" size="15">                   
-                </div>
-                <button class="btn btn-default" type="submit" name="search" >
+           
+            <form action="listado_clientes.php" method="post">
+              <div class="input-group">
+                <input type="text" class="form-control" name="searchInput" placeholder="Valor a buscar">
+                <div class="input-group-btn">
+                  <button class="btn btn-default" name="search" type="submit">
                     <i class="glyphicon glyphicon-search"></i>
-                </button>
+                  </button>
+                </div>
+              </div>
             </form>
               
-            <!--FIN_EDMUNDO-->
-            
-            <?php
-                // conexion al servidor
-                $conexion = mysqli_connect("127.0.0.1","root","");
-
-                //seleccionar la base de datos
-                $db = mysqli_select_db($conexion,"duvica7879");
-
-                //sentencia SQL
-                $sql="select * from registro_cliente;";
-
-                // es un puntero
-                $resultado=mysqli_query($conexion,$sql);
-                
-                //EDMUNDO
-                $consultaNombre="select Nombres from registro_cliente;";
-                $consultaCedula="select Cedula from registro_cliente;";
-                $consultaApellido="select Apellidos from registro_cliente;";
-                $consultaDireccion="select Direccion from registro_cliente;";
-                $consultaFecNac="select Fecha_de_Nacimiento from registro_cliente;";
-
-                $resultId = mysqli_query($conexion,$consultaCedula);
-                $resultFName = mysqli_query($conexion,$consultaNombre);
-                $resultLName = mysqli_query($conexion,$consultaApellido);
-                $resultAddress = mysqli_query($conexion,$consultaDireccion);
-                $resultBirthDate = mysqli_query($conexion,$consultaFecNac);
-
-                
-                //FIN_EDMUNDO
-
-                //IMPRIMIR EL ENCABEZADO DEL REPORTE Y DE LA TABLA
-                echo "<center><h1>LISTADO DE CLIENTES</h1><center>";
-                echo "<table class='table display' id='tableList' align='center' border='1'>";
-                echo "<thead>";
-                echo "<tr>";
-                echo "<th>Cédula<th/>";
-                echo "<th>Nombre<th/>";
-                echo "<th>Apellido<th/>";
-                echo "<th>Dirección<th/>";
-                echo "<th>Fecha de Nacimiento<th/>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-
-                if (isset($_POST['search'])) {
-                    $filterCedula = $_POST["cedula"];
-                    $filterName = $_POST["nombre"];
-                    $filterApellido = $_POST["apellido"];
-                    $filterDireccion = $_POST["direccion"];
-                    $filterFechaNacimiento = $_POST["fechaNacimiento"]; 
-                    
-                     
-
-                }
-                    
-                //convertir resultado en un array o vector
-                //vector o arreglo numerico, con indice numerico
-                //$cliente=mysql_fetch_row($resultado
-
-                //CICLO PARA MOSTRAR LOS DATOS EN TABLA 
-
-                while($registro_cliente=mysqli_fetch_array($resultado))
-                {
-                    echo "<tr>";
-                    //pase de parametros url get
-                    echo "<td>$registro_cliente[0]<td/>";
-                    echo "<td>$registro_cliente[1]<td/>";
-                    echo "<td>$registro_cliente[2]<td/>";
-                    echo "<td>$registro_cliente[3]<td/>";
-                    echo "<td>$registro_cliente[4]<td/>";
-                   
-                    echo "</tr>";
-                }
-                echo "</tbody>";
-                echo '</table>';
-
-                //cerrar la conexion
-                mysqli_close($conexion);
-            ?>
-            
-                   
-                      
-                <!-- /.row -->
-
+            <center><h1>LISTADO DE CLIENTES</h1><center>
+            <table class='table display' id='tableList' align='center' border='1'>
+                <thead>
+                    <tr>
+                        <th>Cédula<th/>
+                        <th>Nombre<th/>
+                        <th>Apellido<th/>
+                        <th>Dirección<th/>
+                        <th>Fecha de Nacimiento<th/>
+                    </tr>
+                </thead>
+                <tbody>
+                <!-- Bucle de llenado de tabla -->
+                <?php while($registro_cliente=mysqli_fetch_array($searchResult)){?> 
+                        <tr>
+                        <td><?php echo $registro_cliente["Cedula"]; ?><td/><!-- Array asociativo -->
+                        <td><?php echo $registro_cliente["Nombres"]; ?><td/>
+                        <td><?php echo $registro_cliente["Apellidos"]; ?><td/>
+                        <td><?php echo $registro_cliente["Direccion"]; ?><td/>
+                        <td><?php echo $registro_cliente["Fecha_de_Nacimiento"]; ?><td/>
+                        </tr>
+                 <?php } ?>
+                </tbody>
+            </table>
+          
             </div>
             <!-- /.container-fluid -->
 
@@ -199,15 +116,7 @@
     <script src="js/plugins/morris/morris.min.js"></script>
     <script src="js/plugins/morris/morris-data.js"></script>
 
-    <!-- DataTable JavaScript -->
-    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-  <script>
-    $(document).ready(function() {
-        $('#tableList').DataTable();
-    
-    });
-  </script>
+  
     
 </body>
-
 </html>
