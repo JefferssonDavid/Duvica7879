@@ -110,7 +110,7 @@ while($registro_empleado=mysqli_fetch_array($resultado))
     echo "<td>$registro_empleado[3]<td/>";
     echo "<td>$registro_empleado[4]<td/>";
     echo "<td>$registro_empleado[5]<td/>";
-    echo "<td><a href='borrar_empleado.php?Cedula=$registro_empleado[0]'>Eliminar
+    echo "<td><a href='borrar_empleado.php?Cedula=$registro_empleado[0]' onclick='return confirm(\"Desea eliminar este empleado?\"); '>Eliminar
     &nbsp&nbsp<td/>";
     echo "</tr>";
 }

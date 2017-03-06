@@ -13,6 +13,7 @@ $resultado = mysqli_query($conexion,$sql);
 
 if($resultado)
 {
+	
 	echo '<script>alert("Cliente Borrado Satisfactoriamente")</script>';
 	echo "<script>location.href='listado_clientes.php'</script>";
 }else{

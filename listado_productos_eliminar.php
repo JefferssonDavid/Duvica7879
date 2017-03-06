@@ -108,7 +108,7 @@ while($registro_producto=mysqli_fetch_array($resultado))
     echo "<td>$registro_producto[2]<td/>";
     echo "<td>$registro_producto[3]<td/>";
     echo "<td>$registro_producto[4]<td/>";
-    echo "<td><a href='borrar_producto.php?Codigo_producto=$registro_producto[0]'>Borrar
+    echo "<td><a href='borrar_producto.php?Codigo_producto=$registro_producto[0]' onclick='return confirm(\"Desea eliminar este producto?\"); '>Borrar
     &nbsp&nbsp<td/>";
     echo "</tr>";
 }
