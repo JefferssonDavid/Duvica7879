@@ -19,7 +19,15 @@
         // conexion al servidor
         $conexion = mysqli_connect("127.0.0.1","root","","duvica7879");
         $filterResult = mysqli_query($conexion,$sql);
-        return $filterResult;
+        $queryExiste = mysqli_num_rows($filterResult);
+        if ($queryExiste==0) {
+            echo '<script type="text/javascript">alert("No existen registros.");</script>';
+            $newQuery ="SELECT * FROM `registro_cliente`;";
+            $filterResult = mysqli_query($conexion,$newQuery);
+            return $filterResult;
+        }else{
+        return $filterResult;  
+        }
     }   
 
 
