@@ -17,8 +17,8 @@ $sql="insert into registro_producto (Codigo_producto,Nombre_producto,Clasificaci
 $resultado=mysqli_query($conexion,$sql);
 
 if($resultado){
-	echo '<script>alert("Cliente Guardado Satisfactoriamente")</script>';
-	echo "<script>location.href='index1.html'</script>";
+	echo '<script>alert("Producto Guardado Satisfactoriamente")</script>';
+	echo "<script>location.href='index.php'</script>";
 }else{
 		echo mysqli_error($conexion);
 	}

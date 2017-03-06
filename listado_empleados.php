@@ -45,7 +45,7 @@ include("vistas/header.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index1.html"><i class="glyphicon glyphicon-chevron-left"></i> Atras</a>
+                <a class="navbar-brand" href="index.php"><i class="glyphicon glyphicon-chevron-left"></i> Atras</a>
             </div>
             <!-- Top Menu Items -->
             

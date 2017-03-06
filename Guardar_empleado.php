@@ -19,7 +19,7 @@ $resultado=mysqli_query($conexion,$sql);
 
 if($resultado){
 	echo '<script>alert("Empleado Guardado Satisfactoriamente")</script>';
-	echo "<script>location.href='index1.html'</script>";
+	echo "<script>location.href='index.php'</script>";
 }else{
 		echo mysqli_error($conexion);
 	}

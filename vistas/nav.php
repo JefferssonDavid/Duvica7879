@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index1.html">Duvica 7879</a>
+                <a class="navbar-brand" href="index.php">Duvica 7879</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
