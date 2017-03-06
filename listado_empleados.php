@@ -1,37 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php 
+include("vistas/header.php");
 
-<head>
+    //Sentencia IF para filtrar los datos de la tabla
+    if (isset($_POST['search'])) {
+        $searchValue= $_POST['searchInput'];
+        $sql= "SELECT * FROM `registro_empleado` WHERE CONCAT(`Cedula`, `Nombres`, `Apellidos`, `Direccion`, `Cargo`, `Fecha_de_Nacimiento`) LIKE '%".$searchValue."%'";
+        $searchResult = filterTable($sql);
+        //Captura el valor del input de busqueda y lo pasa como parametro para la sentencia SQL
+    }
+    else
+    {
+        $sql="select * from registro_empleado;";
+        $searchResult = filterTable($sql);
+        //Como el input de busqueda esta vacio, selecciona todos los registros de la BD
+    }
+     //Función que maneja la base de datos y envia la consulta SQL
+    function filterTable($sql){
+        // conexion al servidor
+        $conexion = mysqli_connect("127.0.0.1","root","","duvica7879");
+        $filterResult = mysqli_query($conexion,$sql);
+        $queryExiste = mysqli_num_rows($filterResult);
+        if ($queryExiste==0) {
+            echo '<script type="text/javascript">alert("No existen registros.");</script>';
+            $newQuery ="SELECT * FROM `registro_empleado`;";
+            $filterResult = mysqli_query($conexion,$newQuery);
+            return $filterResult;
+        }else{
+        return $filterResult;  
+        }
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Duvica 7879</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-     <link rel="stylesheet" type="text/css" href="css/estilos_tabla.css">
-</head>
-
+    }   
+?>
 <body>
 
     <div id="wrapper">
@@ -68,58 +67,45 @@
 
         <div class="php">
 
+            <form action="listado_empleados.php" method="post">
+              <div class="input-group">
+                <input type="text" class="form-control" name="searchInput" placeholder="Valor a buscar">
+                <div class="input-group-btn">
+                  <button class="btn btn-default" name="search" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
 
-<?php
-// conexion al servidor
-$conexion = mysqli_connect("127.0.0.1","root","");
 
-//seleccionar la base de datos
-$db = mysqli_select_db($conexion,"duvica7879");
-
-//sentencia SQL
-$sql="select * from registro_empleado;";
-
-// es un puntero
-$resultado=mysqli_query($conexion,$sql);
-//IMPRIMIR EL ENCABEZADO DEL REPORTE Y DE LA TABLA
-echo "<center><h1>LISTADO DE EMPLEADO</h1><center>";
-echo "<table class='table' align='center' border='1'>";
-echo "<tr>";
-echo "<th>Cedula<th/>";
-echo "<th>Nombres<th/>";
-echo "<th>Apellido<th/>";
-echo "<th>Direccion<th/>";
-echo "<th>Cargo<th/>";
-echo "<th>Fecha de Nacimiento<th/>";
-
-echo "</tr>";
+<center><h1>LISTADO DE EMPLEADO</h1><center>
+<table class='table' align='center' border='1'>
+    <thead>
+        <tr>
+            <th>Cedula<th/>
+            <th>Nombres<th/>
+            <th>Apellido<th/>
+            <th>Direccion<th/>
+            <th>Cargo<th/>
+            <th>Fecha de Nacimiento<th/>
+        </tr>
+    </thead>
+    <tbody>
     
-//convertir resultado en un array o vector
-//vector o arreglo numerico, con indice numerico
-//$cliente=mysql_fetch_row($resultado
 
-//CICLO PARA MOSTRAR LOS DATOS EN TABLA 
-
-while($registro_empleado=mysqli_fetch_array($resultado))
-{
-    echo "<tr>";
-    //pase de parametros url get
-    echo "<td>$registro_empleado[0]<td/>";
-    echo "<td>$registro_empleado[1]<td/>";
-    echo "<td>$registro_empleado[2]<td/>";
-    echo "<td>$registro_empleado[3]<td/>";
-    echo "<td>$registro_empleado[4]<td/>";
-    echo "<td>$registro_empleado[5]<td/>";
-    
-    echo "</tr>";
-}
-echo '</table>';
-
-//cerrar la conexion
-mysqli_close($conexion);
-?>
-
-                   
+    <?php while($registro_empleado=mysqli_fetch_array($searchResult)){?>
+        <tr>
+            <td><?php echo $registro_empleado["Cedula"]; ?><td/>
+            <td><?php echo $registro_empleado["Nombres"]; ?><td/>
+            <td><?php echo $registro_empleado["Apellidos"]; ?><td/>
+            <td><?php echo $registro_empleado["Direccion"]; ?><td/>
+            <td><?php echo $registro_empleado["Cargo"]; ?><td/>
+            <td><?php echo $registro_empleado["Fecha_de_Nacimiento"]; ?><td/>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>                   
                       
                 <!-- /.row -->
 
