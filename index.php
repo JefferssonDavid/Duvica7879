@@ -5,7 +5,6 @@
     $conexion = mysqli_connect("127.0.0.1","root","","duvica7879");
     //variables que alimentaran la vista de los productos
 
-    
     $numClientes=mysqli_num_rows(mysqli_query($conexion,"select * from registro_cliente;"));
     $numEmpleados=mysqli_num_rows(mysqli_query($conexion,"select * from registro_empleado;"));
     // es un puntero
