@@ -20,7 +20,24 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="form-3/index.html"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
+                            <a href="#Advertancia"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="Advertencia">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+         
+        <h4 class="modal-title">Advertencia </h4>
+      </div>
+      <div class="modal-body">
+        <p>Apunto de cerrar sesion, Desea continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">continuar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
                         </li>
                     </ul>
                 </li>
